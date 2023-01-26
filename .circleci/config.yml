@@ -15,3 +15,6 @@ workflows:
             deploy/.* run-deploy true
             src/.* run-build-code true
             tests/.* run-tests true
+          filters:
+            branches:
+              ignore: gh-pages
