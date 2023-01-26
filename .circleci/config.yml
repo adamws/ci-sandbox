@@ -45,11 +45,11 @@ jobs:
           mapping: |
             .* config ".circleci/no-op.yml"
             deploy/.* config ".circleci/continue-config.yml"
-            deploy/.* message "run-deploy"
+            deploy/.* run-deploy true
             src/.* config ".circleci/continue-config.yml"
-            src/.* message "run-build-code"
+            src/.* run-build-code true
             tests/.* config ".circleci/continue-config.yml"
-            tests/.* message "run-tests"
+            tests/.* run-tests true
       - set-continued-config:
           lookup-key: config
       - continuation/continue:
