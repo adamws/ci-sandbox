@@ -70,7 +70,7 @@ workflows:
       - filter-configuration:
           filters:
             branches:
-              ignore: master
+              only: master
       - test-job:
           filters:
             branches:
