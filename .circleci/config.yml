@@ -8,7 +8,7 @@ orbs:
 
 
 jobs:
-  filter-configuration:
+  master-configuration:
     executor: path-filtering/default
     steps:
       - checkout
@@ -25,12 +25,12 @@ jobs:
       - continuation/continue:
           configuration_path: .circleci/continue-config.yml
           parameters: /tmp/pipeline-parameters.json
-  test-job:
+  tags-configuration:
     executor: path-filtering/default
     steps:
       - checkout
       - run:
-          name: check parameters
+          name: Set continuation parameters
           command: |
             echo "{\"run-build-code\": true}" >> /tmp/pipeline-parameters.json
       - continuation/continue:
@@ -41,11 +41,13 @@ jobs:
 workflows:
   setup:
     jobs:
-      - filter-configuration:
+      - master-configuration:
           filters:
             branches:
               only: master
-      - test-job:
+      - tags-configuration:
           filters:
             branches:
-              ignore: master
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/

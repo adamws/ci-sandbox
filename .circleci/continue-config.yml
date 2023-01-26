@@ -19,6 +19,9 @@ jobs:
       - run:
           name: Build and test
           command: echo "build-test"
+      - run:
+          name: Debug
+          command: echo << pipeline.git.branch >>
       - when: # run only on master when code or deployment scripts changed, do not run when only tests changed:
           condition:
             and:
