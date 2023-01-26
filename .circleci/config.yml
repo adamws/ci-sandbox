@@ -26,7 +26,7 @@ jobs:
           configuration_path: .circleci/continue-config.yml
           parameters: /tmp/pipeline-parameters.json
   tags-configuration:
-    executor: path-filtering/default
+    executor: continuation/default
     steps:
       - checkout
       - run:
