@@ -25,7 +25,9 @@ jobs:
       - when: # run only on master when code or deployment scripts changed, do not run when only tests changed:
           condition:
             and:
-              - equal: [ master, << pipeline.git.branch >> ]
+              - or:
+                - << pipeline.git.tag >>
+                - equal: [ master, << pipeline.git.branch >> ]
               - or: [ << pipeline.parameters.run-build-code >>, << pipeline.parameters.run-deploy >> ]
           steps:
             - run:
