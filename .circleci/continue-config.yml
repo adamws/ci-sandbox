@@ -32,7 +32,22 @@ jobs:
           steps:
             - run:
                 name: Deploy
-                command: echo "deploy"
+                environment:
+                  BRANCH: << pipeline.git.branch >>
+                  TAG: << pipeline.git.tag >>
+                command: |
+                  if [ "$BRANCH" == "master" ]; then
+                    echo "master"
+                  else
+                    echo "notmaster"
+                  fi
+                  if [ -z "$TAG" ]; then
+                    echo "not tag"
+                  else
+                    echo "tag"
+                  fi
+
+                  echo "deploy"
 
 workflows:
   build-test-deploy:
