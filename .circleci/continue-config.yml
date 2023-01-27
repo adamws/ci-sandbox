@@ -48,6 +48,11 @@ jobs:
                   fi
 
                   echo "deploy"
+      - run:
+          name: Debug2
+          command: |
+            echo $BRANCH
+            echo $TAG
 
 workflows:
   build-test-deploy:
