@@ -47,10 +47,16 @@ jobs:
                     echo "tag"
                   fi
 
-                  echo "deploy"
+                  echo "export TAG=$TAG" >> $BASH_ENV
+                  echo "export BRANCh=$BRANCH" >> $BASH_ENV
+            - run:
+                name: Deploy
+                command: |
+                  printenv
       - run:
           name: Debug2
           command: |
+            printenv
             echo $BRANCH
             echo $TAG
 
