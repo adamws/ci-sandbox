@@ -15,6 +15,16 @@ jobs:
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop bucket add extras
           scoop install kicad
+      - run: |
+          python -m venv .env
+          venv\Scripts\Activate.ps1
+          pip install -r requirements.txt
+      - run:
+         command: |
+           echo hello
+           pwd
+           ls -alh
+         shell: bash.exe
 
 workflows:
   my-workflow:
