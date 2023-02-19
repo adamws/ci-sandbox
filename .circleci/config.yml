@@ -13,6 +13,8 @@ jobs:
       - run: Write-Host 'Hello, Windows'
       - run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+          scoop bucket add extras
+          scoop install kicad
 
 workflows:
   my-workflow:
