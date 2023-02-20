@@ -1,33 +1,35 @@
-version: 2.1 # Use version 2.1 to enable Orb usage.
+version: 2.1
 
 orbs:
-  win: circleci/windows@5.0 # The Windows orb gives you everything you need to start using the Windows executor.
+  win: circleci/windows@5.0
 
 jobs:
-  build: # name of your job
-    executor: win/default # executor type
-
+  build:
+    executor: win/default
     steps:
-      # Commands are run in a Windows virtual machine environment
       - checkout
-      - run: Write-Host 'Hello, Windows'
-      - run: |
-          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop bucket add extras
-          scoop install kicad
-      - run: |
-          python -m venv .env
-          venv\Scripts\Activate.ps1
-          pip install -r requirements.txt
+      - restore_cache:
+          key: scoop-{{ .Branch }}
       - run:
-         command: |
-           echo hello
-           pwd
-           cd ~
-           pwd
-           ls -alh
-           ls scoop\aapps\kicad
-         shell: bash.exe
+          name: "Install scoop and KiCad"
+          command: |
+            irm get.scoop.sh -outfile 'install.ps1'
+            .\install.ps1 -RunAsAdmin -ScoopDir 'C:\scoop'
+            scoop bucket add extras
+            scoop install kicad
+            scoop update kicad
+      - save_cache:
+          key: scoop-{{ .Branch }}
+          paths:
+            - C:\scoop
+      - run:
+          command: |
+            python -m venv .env
+            source .env/bin/activate
+            pip install -r requirements.txt
+            pwd
+            ls /c/scoop/apps/kicad
+          shell: bash.exe
 
 workflows:
   my-workflow:
