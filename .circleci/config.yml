@@ -24,7 +24,9 @@ jobs:
             - C:\scoop
       - run:
           command: |
-            $env:PATH
+            $env:Path
+            .\.circleci\python.ps1
+            $env:Path
 
 workflows:
   my-workflow:
