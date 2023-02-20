@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: scoop-{{ .Branch }}
+          key: scoop-{{ .Branch }}-{{ checksum "requirements.txt" }}
       - run:
           name: "Install scoop and KiCad"
           command: |
@@ -18,16 +18,25 @@ jobs:
             scoop bucket add extras
             scoop install kicad
             scoop update kicad
-      - save_cache:
-          key: scoop-{{ .Branch }}
-          paths:
-            - C:\scoop
       - run:
+          name: "Install dependencies"
           command: |
             .\.circleci\use-kicad-python.ps1
             python -m pip install --upgrade pip
             pip --version
             pip install -r requirements.txt
+      - save_cache:
+          key: scoop-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - C:\scoop
+      - run:
+          name: "Download kicad-kbplacer"
+          command: |
+            $url = "https://github.com/adamws/kicad-kbplacer/releases/download/v0.3/kicad-kbplacer.zip"
+            $destination = "C:\\scoop\\apps\\kicad\\current\\bin\\plugins"
+            Invoke-WebRequest -Uri $url -OutFile "$destination\\kicad-kbplacer.zip"
+            Expand-Archive -Path "$destination\\kicad-kbplacer.zip" -DestinationPath $destination
+
 
 workflows:
   my-workflow:

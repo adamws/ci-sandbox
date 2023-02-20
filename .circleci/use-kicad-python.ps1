@@ -5,4 +5,8 @@ Write-Output "Add KiCad's python to environment"
 $addPaths = "C:\scoop\apps\kicad\current\bin","C:\scoop\apps\kicad\current\bin\Scripts"
 $env:Path = ($arrPath + $addPaths) -join ";"
 
-python -c "import pcbnew; print(pcbnew.Version())"
+python -c "import pcbnew; print('KiCad version:' + pcbnew.Version())"
+
+if ($LastExitCode -ne 0) {
+  Write-Error "Could not import pcbnew"
+}
