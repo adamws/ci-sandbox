@@ -24,12 +24,8 @@ jobs:
             - C:\scoop
       - run:
           command: |
+            .\.circleci\use-kicad-python.ps1
             $env:Path
-            python --version
-            .\.circleci\python.ps1
-            $env:Path
-            python --version
-            python -c "import pcbnew; print(pcbnew.Version())"
 
 workflows:
   my-workflow:
