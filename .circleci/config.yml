@@ -33,10 +33,22 @@ jobs:
           name: "Download kicad-kbplacer"
           command: |
             $url = "https://github.com/adamws/kicad-kbplacer/releases/download/v0.3/kicad-kbplacer.zip"
-            $destination = "C:\\scoop\\apps\\kicad\\current\\bin\\plugins"
-            Invoke-WebRequest -Uri $url -OutFile "$destination\\kicad-kbplacer.zip"
-            Expand-Archive -Path "$destination\\kicad-kbplacer.zip" -DestinationPath $destination
-
+            $destination = "$env:USERPROFILE/.local/share/kicad/6.0/3rdparty/plugins"
+            if(!(Test-Path $destination))
+            {
+                New-Item -Path $destination -ItemType Directory -Force
+            }
+            $tmp = "$env:TEMP"
+            Invoke-WebRequest -Uri $url -OutFile "$tmp/kicad-kbplacer.zip"
+            Expand-Archive -Path "$tmp/kicad-kbplacer.zip" -DestinationPath $tmp -Force
+            Move-Item -Path "$tmp/plugins" -Destination $destination/com_github_adamws_kicad-kbplacer
+      - run:
+          name: "Run tests"
+          command: |
+            .\.circleci\use-kicad-python.ps1
+            git clone https://github.com/adamws/kicad-kbplacer.git
+            cd kicad-kbplacer/tests
+            pytest --test-plugin-installation
 
 workflows:
   my-workflow:
