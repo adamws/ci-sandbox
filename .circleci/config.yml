@@ -1,20 +1,26 @@
 version: 2.1
 
 jobs:
+  build:
+    docker:
+      - image: cimg/node:19.7.0
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: echo "test2"
   deploy-docs:
     docker:
       - image: cimg/node:19.7.0
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "5d:40:6c:08:6e:95:6e:17:0d:b0:df:c7:b9:f9:e7:da"
       - run:
           name: Build and deploy github pages
           working_directory: docs
-          command: ./deploy.sh
+          command: echo "test"
 
 workflows:
   my-workflow:
     jobs:
+      - build
       - deploy-docs
