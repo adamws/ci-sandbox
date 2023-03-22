@@ -18,6 +18,7 @@ jobs:
           name: Build
           command: echo "test"
       - run:
+          shell: /bin/bash
           name: Build
           command: echooooo
   dependent-job:
