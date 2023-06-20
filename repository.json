@@ -1,0 +1,22 @@
+{
+    "$schema": "https://gitlab.com/kicad/code/kicad/-/raw/master/kicad/pcm/schemas/pcm.v1.schema.json#/definitions/Repository",
+    "maintainer": {
+        "contact": {
+            "web": "https://adamws.github.io"
+        },
+        "name": "adamws"
+    },
+    "name": "kicad-kbplacer development repository",
+    "packages": {
+        "url": "https://adamws.github.io/kicad-kbplacer/packages.json",
+        "sha256": "faca7c4e41976e52700c7181bfc95473a8d2dac9cfd0b5726abb8822e06c2ff5",
+        "update_time_utc": "2023-06-21 20:51:41",
+        "update_timestamp": 1687380701
+    },
+    "resources": {
+        "url": "https://adamws.github.io/kicad-kbplacer/resources.zip",
+        "sha256": "5227b1a385826b6c661c46032814d54e1ffaf178a7391bac1d06a0e1934e5da8",
+        "update_time_utc": "2023-06-21 20:51:41",
+        "update_timestamp": 1687380701
+    }
+}
