@@ -1,47 +1,57 @@
 version: 2.1
 
 jobs:
-  build:
+  create-pcm-release:
     docker:
-      - image: cimg/node:19.7.0
-    steps: &example-steps
-      - checkout
-      - run:
-          name: Build
-          command: echo "test"
-  build2:
-    docker:
-      - image: cimg/node:19.7.0
-    steps: &example-steps
-      - checkout
-      - run:
-          name: Build
-          command: echo "test"
-      - run:
-          shell: /bin/bash
-          name: Build
-          command: echooooo
-  dependent-job:
-    docker:
-      - image: cimg/base:2023.03
+      - image: cimg/python:3.11
     steps:
-      - checkout
-      - run: ./patch-status.sh
-  waiter:
-    docker:
-      - image: cimg/base:2023.03
-    steps:
-      - checkout
-      - run: ./.circleci/wait-for-jobs.sh
+      - run:
+          name: Checkcout
+          command: |
+            git clone -b develop https://github.com/adamws/kicad-kbplacer.git
+      - run:
+          name: Setup environment variables
+          command: |
+            if [ -z "$CIRCLE_TAG" ]; then
+              echo "export KBPLACER_KICAD_STATUS=stable" >> $BASH_ENV
+              echo "export KBPLACER_KICAD_RELEASE_URL=https://github.com/adamws/ci-sandbox/releases/download/v{version}/{zip_name}" >> $BASH_ENV
+            fi
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt-get update && sudo apt-get install -y gettext
+            python -m pip install --upgrade hatch
+      - run:
+          name: Create zip package and repository
+          environment:
+            HATCH_BUILD_HOOK_ENABLE_KICAD-REPOSITORY: true
+          command: |
+            python -m hatch build --target kicad-package
+          working_directory: kicad-kbplacer
+      - store_artifacts:
+          path: kicad-kbplacer/dist/repository
+      - when: # run only on master
+          condition:
+            equal: [ master, << pipeline.git.branch >> ]
+          steps:
+            - add_ssh_keys:
+                fingerprints:
+                  - "5d:40:6c:08:6e:95:6e:17:0d:b0:df:c7:b9:f9:e7:da"
+            - run:
+                name: Deploy repository to github pages
+                command: |
+                  ssh-keyscan github.com >> ~/.ssh/known_hosts
+                  ./kicad-kbplacer/release/deploy.sh
 
 workflows:
-  my-workflow:
+  main:
     jobs:
-      - build
-      - build2:
-          requires:
-            - build
-      - waiter
-      - dependent-job:
-          requires:
-            - waiter
+      - create-pcm-release
+  kicad-release:
+    jobs:
+      - create-pcm-release:
+          filters:
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/
+            branches:
+              ignore: /.*/
