@@ -110,6 +110,7 @@ workflows:
       - create-pypi-package:
           filters: *tag-filter
       - create-github-release:
+          filters: *tag-filter
           requires:
             - create-pcm-package
             - create-pypi-package
