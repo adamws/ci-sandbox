@@ -14,7 +14,7 @@ jobs:
             else
               echo "Building release package"
               echo "export KBPLACER_KICAD_STATUS=stable" >> $BASH_ENV
-              echo "export KBPLACER_KICAD_RELEASE_URL=https://github.com/adamws/kicad-kbplacer/releases/download/v{version}/{zip_name}" >> $BASH_ENV
+              echo "export KBPLACER_KICAD_RELEASE_URL=https://github.com/adamws/ci-sandbox/releases/download/v{version}/{zip_name}" >> $BASH_ENV
             fi
       - run:
           name: Install dependencies
