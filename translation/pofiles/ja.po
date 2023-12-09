@@ -1,0 +1,62 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2023-09-30 23:37+0200\n"
+"PO-Revision-Date: 2023-07-14 20:04+0200\n"
+"Last-Translator: Google translate\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "<missing>"
+msgstr "<欠落している>"
+
+msgid "development build"
+msgstr "開発ビルド"
+
+msgid ""
+"Plugin for mechanical keyboard design. It features automatic key placement \n"
+"based on popular layout description from "
+msgstr ""
+"メカニカルキーボード設計用プラグイン。人気の \n"
+"あるレイアウトの説明に基づいた自動キー配置を備えています。 "
+
+msgid "Project website - "
+msgstr "プロジェクトのウェブサイト - "
+
+msgid "Geekhack forum thread - "
+msgstr "Geekhack フォーラムスレッド -"
+
+msgid "Save to:"
+msgstr ""
+
+msgid "Load from:"
+msgstr ""
+
+msgid "Keyboard layout file:"
+msgstr "キーボードレイアウトファイル:"
+
+msgid "Switch settings"
+msgstr "スイッチの設定"
+
+msgid "Route with switches"
+msgstr ""
+
+msgid "Switch diodes settings"
+msgstr "スイッチダイオード設定"
+
+msgid "Additional elements settings"
+msgstr "追加要素の設定"
+
+msgid "Route rows and columns"
+msgstr ""
+
+msgid "Controller circuit template file:"
+msgstr "コントローラー回路テンプレートファイル:"
+
+msgid "Other settings"
+msgstr "その他の設定"
