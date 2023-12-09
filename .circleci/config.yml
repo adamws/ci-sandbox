@@ -75,7 +75,7 @@ jobs:
       - image: cimg/base:2023.12
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: /tmp
       - checkout
       - run:
           name: Install dependencies
@@ -86,17 +86,17 @@ jobs:
           command: |
             if [ -z "$CIRCLE_TAG" ]; then exit 1; fi
             gh config set prompt disabled
-            gh release create $CIRCLE_TAG --draft --verify-tag --title $CIRCLE_TAG
+            gh release create $CIRCLE_TAG --prerelease --verify-tag --title $CIRCLE_TAG
       - run:
           name: Upload artifacts to release
           command: |
             NAME=kbplacer-$(echo $CIRCLE_TAG | cut -c 2-)
             gh release upload $CIRCLE_TAG \
-              /tmp/workspace/dist/$NAME.tar.gz \
-              /tmp/workspace/dist/repository/$NAME.zip \
-              /tmp/workspace/dist/repository/packages.json \
-              /tmp/workspace/dist/repository/repository.json \
-              /tmp/workspace/dist/repository/resources.zip
+              /tmp/dist/$NAME.tar.gz \
+              /tmp/dist/repository/$NAME.zip \
+              /tmp/dist/repository/packages.json \
+              /tmp/dist/repository/repository.json \
+              /tmp/dist/repository/resources.zip
 
 workflows:
   kicad-release:
