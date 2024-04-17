@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'conan-io/conan-center-index'
+          repository: 'adamws/conan-center-index'
       - run: python -m pip install conan
       - shell: bash
         run: ls -alh
@@ -20,5 +20,5 @@ jobs:
         run: |
           cd recipes/cyrus-sasl/all
           conan profile detect
-          conan create . --version 2.1.28 --build=missing
+          conan create . --version 2.1.28 --build=missing --options cyrus-sasl/*:shared=True
           conan test test_package cyrus-sasl/2.1.28
