@@ -6,8 +6,8 @@ on:
 
 jobs:
 
-  build-and-test-win:
-    name: Build and test on windows
+  build-and-test-cyrus-sasl:
+    name: Build and test cyrus-sasl
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,9 +16,22 @@ jobs:
           ref: 'cyrus-sasl-msvc-test'
       - run: python -m pip install conan
       - shell: bash
-        run: ls -alh
-      - shell: bash
         run: |
           cd recipes/cyrus-sasl/all
           conan profile detect
           conan create . --version 2.1.28 --build=missing --options cyrus-sasl/*:shared=True
+
+  build-and-test-rxspencer:
+    name: Build and test rxspencer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'adamws/conan-center-index'
+          ref: 'rxspencer'
+      - run: python -m pip install conan
+      - shell: bash
+        run: |
+          cd recipes/rxspencer/all
+          conan profile detect
+          conan create . --version 3.9.0
