@@ -1,0 +1,24 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  build-and-test-win:
+    name: Build and test on windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'conan-io/conan-center-index'
+      - run: python -m pip install conan
+      - shell: bash
+        run: ls -alh
+      - shell: bash
+        run: |
+          cd recipes/cyrus-sasl/all
+          conan profile detect
+          conan create . --version 2.1.28 --build=missing
+          conan test test_package cyrus-sasl/2.1.28
