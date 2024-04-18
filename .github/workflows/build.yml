@@ -23,7 +23,7 @@ jobs:
 
   build-and-test-cyrus-sasl2:
     name: Build and test cyrus-sasl2
-    runs-on: windows-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
         with:
